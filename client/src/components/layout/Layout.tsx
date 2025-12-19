@@ -1,7 +1,9 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, ShieldCheck } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const LOGO_URL = "https://i.postimg.cc/SRhfQr5R/Image-(2).png";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +33,12 @@ export function Navbar() {
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 cursor-pointer">
-          <div className="bg-primary text-white p-2 rounded-lg">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
+        <Link href="/" className="flex items-center gap-3 cursor-pointer">
+          <img 
+            src={LOGO_URL} 
+            alt="Nioora Logo" 
+            className="h-10 w-10 rounded-lg object-contain"
+          />
           <span className={`text-2xl font-heading font-bold tracking-tight ${scrolled ? "text-foreground" : "text-foreground"}`}>
             Nioora
           </span>
@@ -104,9 +108,11 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="bg-primary text-white p-1.5 rounded-md">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
+              <img 
+                src={LOGO_URL} 
+                alt="Nioora Logo" 
+                className="h-8 w-8 rounded-md object-contain"
+              />
               <span className="text-xl font-heading font-bold text-white">Nioora</span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
