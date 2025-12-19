@@ -9,8 +9,8 @@ export default function Contact() {
       icon: Phone,
       title: "Phone",
       subtitle: "Call for priority support",
-      content: "+91 9940937570",
-      href: "tel:+919940937570",
+      content: "+91 6374105733",
+      href: "tel:+916374105733",
       color: "from-blue-500 to-blue-600"
     },
     {

@@ -151,7 +151,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary" />
-                <a href="tel:+919940937570" className="hover:text-white transition-colors">+91 9940937570</a>
+                <a href="tel:+916374105733" className="hover:text-white transition-colors">+91 6374105733</a>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">

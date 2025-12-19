@@ -230,9 +230,9 @@ export default function Home() {
             <Link href="/contact">
               <Button size="lg" className="rounded-full px-8">Book Now</Button>
             </Link>
-             <a href="tel:+919940937570">
+             <a href="tel:+916374105733">
               <Button variant="outline" size="lg" className="rounded-full px-8 gap-2 bg-white">
-                <Phone className="w-4 h-4" /> Call +91 9940937570
+                <Phone className="w-4 h-4" /> Call +91 6374105733
               </Button>
             </a>
           </div>

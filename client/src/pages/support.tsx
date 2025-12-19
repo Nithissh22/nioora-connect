@@ -48,7 +48,7 @@ export default function Support() {
               <p className="text-slate-600 mb-6">
                 Call our support line for immediate assistance during business hours.
               </p>
-              <a href="tel:+919940937570">
+              <a href="tel:+916374105733">
                 <Button className="w-full">Call Now</Button>
               </a>
             </div>
