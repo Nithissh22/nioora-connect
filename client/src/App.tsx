@@ -42,9 +42,12 @@ function Router() {
   );
 }
 
+import PageLoader from "@/components/ui/PageLoader";
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <PageLoader />
       <TooltipProvider>
         <Toaster />
         <Router />
