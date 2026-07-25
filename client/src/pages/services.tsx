@@ -1,18 +1,21 @@
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
-import { services, categories } from "@/lib/data";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useServices, ServiceIcon } from "@/hooks/use-services";
 
 export default function Services() {
+  const { data, isLoading: loading } = useServices();
+  const services = data?.services || [];
+  const categories = data?.categories || [];
   const [activeCategory, setActiveCategory] = useState("All");
   const [showComingSoon, setShowComingSoon] = useState(false);
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
-  const filteredServices = activeCategory === "All" 
-    ? services 
-    : services.filter(s => s.category === activeCategory);
+  const filteredServices = activeCategory === "All"
+    ? services
+    : services.filter((service) => service.category === activeCategory);
 
   const handleServiceClick = (serviceName: string) => {
     setSelectedService(serviceName);
@@ -61,43 +64,47 @@ export default function Services() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredServices.map((service, idx) => (
-              <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ delay: idx * 0.02 }}
-                key={service.id}
-                onClick={() => handleServiceClick(service.name)}
-              >
-                <Card className="h-full hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group border border-slate-100 bg-white overflow-hidden">
-                  <CardContent className="p-8 flex flex-col items-center text-center gap-4 h-full justify-between">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
-                      <service.icon className="w-8 h-8 stroke-[1.5]" />
-                    </div>
-                    <div className="flex-grow flex flex-col justify-center">
-                      <h3 className="font-bold text-slate-900 text-lg mb-1 group-hover:text-primary transition-colors line-clamp-2">
-                        {service.name}
-                      </h3>
-                      <p className="text-xs text-slate-500 font-semibold uppercase tracking-wide">{service.category}</p>
-                    </div>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                      <span className="inline-flex items-center gap-1 text-sm font-bold text-primary">
-                        View Details →
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+        {loading ? (
+          <div className="text-center py-20 text-slate-600">Loading services...</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <AnimatePresence mode="popLayout">
+              {filteredServices.map((service, idx) => (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                  transition={{ delay: idx * 0.02 }}
+                  key={service.id}
+                  onClick={() => handleServiceClick(service.name)}
+                >
+                  <Card className="h-full hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group border border-slate-100 bg-white overflow-hidden">
+                    <CardContent className="p-8 flex flex-col items-center text-center gap-4 h-full justify-between">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md">
+                        <ServiceIcon name={service.icon} className="w-8 h-8" />
+                      </div>
+                      <div className="flex-grow flex flex-col justify-center">
+                        <h3 className="font-bold text-slate-900 text-lg mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                          {service.name}
+                        </h3>
+                        <p className="text-xs text-slate-500 font-semibold uppercase tracking-wide">{service.category}</p>
+                      </div>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        <span className="inline-flex items-center gap-1 text-sm font-bold text-primary">
+                          View Details →
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
 
         {/* No services message */}
-        {filteredServices.length === 0 && (
+        {!loading && filteredServices.length === 0 && (
           <div className="text-center py-20">
             <p className="text-slate-600 text-lg">No services found in this category.</p>
           </div>

@@ -9,22 +9,34 @@ import Services from "@/pages/services";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import Support from "@/pages/support";
-import { Terms, Privacy, Cancellation, Shipping } from "@/pages/policies";
+
+// 1. Import both policy files using namespaces
+import * as CustomerPolicies from "@/pages/privacy_policies_coustomers";
+import * as PartnerPolicies from "@/pages/privacy_policies_partners";
 
 function Router() {
   return (
     <Switch>
+      {/* Standard Pages */}
       <Route path="/" component={Home} />
       <Route path="/services" component={Services} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
       <Route path="/support" component={Support} />
       
-      <Route path="/terms-conditions" component={Terms} />
-      <Route path="/privacy-policy" component={Privacy} />
-      <Route path="/cancellation-refund" component={Cancellation} />
-      <Route path="/shipping-policy" component={Shipping} />
+      {/* 2. CUSTOMER POLICY ROUTES */}
+      <Route path="/terms-conditions" component={CustomerPolicies.Terms} />
+      <Route path="/privacy-policy" component={CustomerPolicies.Privacy} />
+      <Route path="/cancellation-refund" component={CustomerPolicies.Cancellation} />
+      <Route path="/shipping-policy" component={CustomerPolicies.Shipping} />
+
+      {/* 3. PARTNER POLICY ROUTES */}
+      <Route path="/partner/terms-conditions" component={PartnerPolicies.Terms} />
+      <Route path="/partner/privacy-policy" component={PartnerPolicies.Privacy} />
+      <Route path="/partner/cancellation-refund" component={PartnerPolicies.Cancellation} />
+      <Route path="/partner/shipping-policy" component={PartnerPolicies.Shipping} />
       
+      {/* Fallback */}
       <Route component={NotFound} />
     </Switch>
   );

@@ -2,15 +2,16 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { services } from "@/lib/data";
 import { Link } from "wouter";
+import { useServices, ServiceIcon } from "@/hooks/use-services";
 import { motion } from "framer-motion";
 import { CheckCircle2, Clock, Shield, Star, Phone } from "lucide-react";
 import heroImage from "@assets/generated_images/professional_home_service_technician_working.png";
 import technicianImage from "@assets/generated_images/modern_home_living_room_electronics.png";
 
 export default function Home() {
-  const featuredServices = services.slice(0, 8); // Show first 8
+  const { data, isLoading } = useServices();
+  const featuredServices = data?.services?.slice(0, 8) || [];
 
   return (
     <Layout>
@@ -143,31 +144,35 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {featuredServices.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Link href="/contact">
-                  <Card className="h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border-slate-200/60 bg-white">
-                    <CardContent className="p-6 flex flex-col items-center text-center gap-4">
-                      <div className="w-14 h-14 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <service.icon className="w-7 h-7" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-slate-900 mb-1">{service.name}</h3>
-                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{service.category}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="text-center py-10 text-slate-500">Loading services...</div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {featuredServices.map((service, index) => (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Link href="/contact">
+                    <Card className="h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border-slate-200/60 bg-white">
+                      <CardContent className="p-6 flex flex-col items-center text-center gap-4">
+                        <div className="w-14 h-14 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <ServiceIcon name={service.icon} className="w-7 h-7" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-slate-900 mb-1">{service.name}</h3>
+                          <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{service.category}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
