@@ -1,17 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
-import type { ServiceItem } from "@shared/services";
+import { serviceCatalog, serviceCategories } from "@shared/services";
 import * as Icons from "lucide-react";
 import React from "react";
 
 type ServicesResponse = {
-  services: ServiceItem[];
-  categories: string[];
+  services: typeof serviceCatalog;
+  categories: typeof serviceCategories;
 };
 
 export function useServices() {
-  return useQuery<ServicesResponse>({
-    queryKey: ["/api/services"],
-  });
+  return {
+    data: {
+      services: serviceCatalog,
+      categories: serviceCategories,
+    } as ServicesResponse,
+    isLoading: false,
+    error: null,
+  };
 }
 
 // Helper component to dynamically render a lucide-react icon by name
