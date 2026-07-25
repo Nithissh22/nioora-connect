@@ -26,9 +26,9 @@ export const serviceCatalog: ServiceItem[] = [
   { id: "inverter", name: "Inverter", category: "Electronics", icon: "BatteryCharging" },
   { id: "electrical", name: "Electrical", category: "Home Services", icon: "Zap" },
   { id: "plumbing", name: "Plumbing", category: "Home Services", icon: "Wrench" },
-  { id: "wiring", name: "Wiring", category: "Home Services", icon: "Component" },
+  { id: "wiring", name: "Wiring", category: "Home Services", icon: "Cable" },
   { id: "fan", name: "Fan", category: "Home Services", icon: "Fan" },
-  { id: "grinder", name: "Grinder", category: "Appliances", icon: "PenTool" },
+  { id: "grinder", name: "Grinder", category: "Appliances", icon: "Blend" },
 ];
 
 export const serviceCategories = ["All", "Appliances", "Electronics", "Home Services"];
