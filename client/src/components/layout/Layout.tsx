@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 const LOGO_URL = "https://i.postimg.cc/SRhfQr5R/Image-(2).png";
 
@@ -57,10 +57,11 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Link href="/contact">
-            <Button size="sm" className="rounded-full px-6 cursor-pointer">
-              Book Service
-            </Button>
+          <Link 
+            href="/contact" 
+            className={buttonVariants({ size: "sm", className: "rounded-full px-6 cursor-pointer" })}
+          >
+            Book Service
           </Link>
         </div>
 
@@ -87,10 +88,12 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/contact" onClick={() => setIsOpen(false)}>
-              <Button className="w-full mt-2 cursor-pointer">
-                Book Service
-              </Button>
+            <Link 
+              href="/contact" 
+              onClick={() => setIsOpen(false)}
+              className={buttonVariants({ className: "w-full mt-2 cursor-pointer" })}
+            >
+              Book Service
             </Link>
           </div>
         </div>
