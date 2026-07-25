@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 
-const LOGO_URL = "https://i.postimg.cc/SRhfQr5R/Image-(2).png";
+const LOGO_URL = "/logo-loader.png";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

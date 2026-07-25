@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const LOGO_URL = "https://i.postimg.cc/SRhfQr5R/Image-(2).png";
+const LOGO_URL = "/logo-loader.png";
 
 export default function PageLoader() {
   const [isLoading, setIsLoading] = useState(true);
