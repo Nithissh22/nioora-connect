@@ -9,8 +9,8 @@ export default function Support() {
       <div className="bg-primary text-white py-16">
         <div className="container px-4 md:px-6 text-center">
           <Headset className="w-16 h-16 mx-auto mb-6 opacity-90" />
-          <h1 className="text-4xl font-heading font-bold mb-4">Customer Support</h1>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4">Customer Support</h1>
+          <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto">
             We are dedicated to providing priority support to ensure your experience is seamless.
           </p>
         </div>

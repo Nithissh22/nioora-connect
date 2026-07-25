@@ -38,13 +38,13 @@ export default function Home() {
                   Fast, transparent, and stress-free.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <Link href="/contact">
-                    <Button size="lg" className="rounded-full px-8 h-12 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
+                  <Link href="/contact" className="w-full sm:w-auto block">
+                    <Button size="lg" className="w-full rounded-full px-8 h-12 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
                       Book a Service
                     </Button>
                   </Link>
-                  <Link href="/support">
-                    <Button variant="outline" size="lg" className="rounded-full px-8 h-12 text-base border-slate-300 hover:bg-slate-50">
+                  <Link href="/support" className="w-full sm:w-auto block">
+                    <Button variant="outline" size="lg" className="w-full rounded-full px-8 h-12 text-base border-slate-300 hover:bg-slate-50">
                       Contact Support
                     </Button>
                   </Link>
@@ -147,7 +147,7 @@ export default function Home() {
           {isLoading ? (
             <div className="text-center py-10 text-slate-500">Loading services...</div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
               {featuredServices.map((service, index) => (
                 <motion.div
                   key={service.id}
@@ -156,15 +156,15 @@ export default function Home() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <Link href="/contact">
+                  <Link href="/contact" className="block h-full">
                     <Card className="h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border-slate-200/60 bg-white">
-                      <CardContent className="p-6 flex flex-col items-center text-center gap-4">
-                        <div className="w-14 h-14 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <ServiceIcon name={service.icon} className="w-7 h-7" />
+                      <CardContent className="p-4 md:p-6 flex flex-col items-center text-center gap-3 md:gap-4 h-full justify-between">
+                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-blue-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <ServiceIcon name={service.icon} className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <div>
-                          <h3 className="font-bold text-slate-900 mb-1">{service.name}</h3>
-                          <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">{service.category}</p>
+                          <h3 className="font-bold text-slate-900 text-sm md:text-base mb-1 line-clamp-2">{service.name}</h3>
+                          <p className="text-[10px] md:text-xs text-slate-500 font-medium uppercase tracking-wider">{service.category}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -232,11 +232,11 @@ export default function Home() {
             Experience the best home service in town. Book a technician today or contact our support team.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
-              <Button size="lg" className="rounded-full px-8">Book Now</Button>
+            <Link href="/contact" className="w-full sm:w-auto block">
+              <Button size="lg" className="w-full rounded-full px-8">Book Now</Button>
             </Link>
-             <a href="tel:+916374105733">
-              <Button variant="outline" size="lg" className="rounded-full px-8 gap-2 bg-white">
+             <a href="tel:+916374105733" className="w-full sm:w-auto block">
+              <Button variant="outline" size="lg" className="w-full rounded-full px-8 gap-2 bg-white">
                 <Phone className="w-4 h-4" /> Call +91 6374105733
               </Button>
             </a>

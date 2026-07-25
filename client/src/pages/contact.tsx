@@ -50,8 +50,8 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">Contact Us</h1>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">Contact Us</h1>
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
               Get in touch with Nioora for any inquiries or support needs. We're here to help!
             </p>
           </motion.div>

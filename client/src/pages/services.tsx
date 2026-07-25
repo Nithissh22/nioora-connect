@@ -33,8 +33,8 @@ export default function Services() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl md:text-6xl font-heading font-bold mb-6">Our Services</h1>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6">Our Services</h1>
+            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Comprehensive installation, repair, and maintenance solutions for all your home needs.
               Professional technicians ready to assist.
             </p>
