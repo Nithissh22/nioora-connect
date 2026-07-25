@@ -93,47 +93,20 @@ export default function PageLoader() {
                   transition={{ duration: 1.2, delay: 1.2, ease: power2Out }}
                 />
 
-                {/* 3. The "N" Strokes (2.4s - 3.6s) */}
-                {/* We use motion.path with 3D tilt on the parent or path itself */}
+                {/* 3. The "N" Monogram (2.4s - 3.6s) */}
+                {/* Drawn as a single continuous path for perfect miter joints and sequential drawing */}
                 <g style={{ transformOrigin: "50% 50%" }}>
-                  {/* Left Vertical */}
-                  <motion.line
-                    x1="32"
-                    y1="25"
-                    x2="32"
-                    y2="75"
+                  <motion.path
+                    d="M 28 75 L 28 25 L 72 75 L 72 25"
+                    fill="none"
                     stroke="#7A2020"
-                    strokeWidth="10"
+                    strokeWidth="14"
                     strokeLinecap="square"
+                    strokeLinejoin="miter"
+                    strokeMiterlimit="10"
                     initial={{ pathLength: 0, rotateY: -10, scale: 1.03 }}
                     animate={{ pathLength: 1, rotateY: 0, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 2.4, ease: power3Out }}
-                  />
-                  {/* Diagonal */}
-                  <motion.line
-                    x1="32"
-                    y1="25"
-                    x2="68"
-                    y2="75"
-                    stroke="#7A2020"
-                    strokeWidth="10"
-                    strokeLinecap="square"
-                    initial={{ pathLength: 0, rotateY: -10, scale: 1.03 }}
-                    animate={{ pathLength: 1, rotateY: 0, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 2.8, ease: power3Out }}
-                  />
-                  {/* Right Vertical */}
-                  <motion.line
-                    x1="68"
-                    y1="75"
-                    x2="68"
-                    y2="25"
-                    stroke="#7A2020"
-                    strokeWidth="10"
-                    strokeLinecap="square"
-                    initial={{ pathLength: 0, rotateY: -10, scale: 1.03 }}
-                    animate={{ pathLength: 1, rotateY: 0, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 3.2, ease: power3Out }}
+                    transition={{ duration: 1.2, delay: 2.4, ease: power3Out }}
                   />
                 </g>
               </svg>
