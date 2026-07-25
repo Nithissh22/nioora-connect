@@ -18,7 +18,7 @@ export default function Contact() {
       title: "Email",
       subtitle: "For general inquiries",
       content: "niooraservice@gmail.com",
-      href: "mailto:niooraservice@gmail.com",
+      href: "https://mail.google.com/mail/?view=cm&fs=1&to=niooraservice@gmail.com",
       color: "from-purple-500 to-purple-600"
     },
     {
@@ -87,7 +87,7 @@ export default function Contact() {
                   transition={{ delay: idx * 0.1 }}
                 >
                   {item.href ? (
-                    <a href={item.href}>
+                    <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
                       <Card className="h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group border border-slate-100 bg-white overflow-hidden">
                         <CardContent className="p-8">
                           <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>

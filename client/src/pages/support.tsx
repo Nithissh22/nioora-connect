@@ -35,7 +35,7 @@ export default function Support() {
               <p className="text-slate-600 mb-6">
                 Send us an email with your query and we will get back to you within 24 hours.
               </p>
-              <a href="mailto:niooraservice@gmail.com">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=niooraservice@gmail.com" target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" className="w-full">Email Support</Button>
               </a>
             </div>
