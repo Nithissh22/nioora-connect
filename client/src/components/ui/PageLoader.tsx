@@ -3,20 +3,22 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const LOGO_URL = "/logo-loader.png";
 
-// "Butter-smooth" cinematic easing (Apple-style exponential decay)
+// "Butter-smooth" cinematic easing for fades/transforms
 const smoothEase = [0.25, 1, 0.5, 1];
-const gentleEngage = [0.34, 1.56, 0.64, 1]; // Slight soft spring for the click
+// Smooth, consistent speed for drawing paths (avoids jerky starts)
+const drawEase = [0.4, 0, 0.2, 1];
+const gentleEngage = [0.34, 1.56, 0.64, 1];
 
 export default function PageLoader() {
   const [isLoading, setIsLoading] = useState(true);
   const [step, setStep] = useState<"build" | "engage" | "text" | "done">("build");
 
   useEffect(() => {
-    // 0.0 - 4.2s: Build phase (Teeth, Ring, N strokes) - Extended for smoothness
+    // 0.0 - 4.2s: Build phase (Teeth, Ring, N strokes)
     const t1 = setTimeout(() => setStep("engage"), 4200);
-    // 4.2 - 4.6s: Engagement moment (tiny soft shift)
-    const t2 = setTimeout(() => setStep("text"), 4600);
-    // 4.6 - 7.5s: Text reveal and confident hold, then end
+    // 4.2 - 4.8s: Engagement moment (mask floods to reveal full image)
+    const t2 = setTimeout(() => setStep("text"), 4800);
+    // 4.8 - 7.5s: Text reveal and confident hold, then end
     const t3 = setTimeout(() => {
       setStep("done");
       setIsLoading(false);
@@ -51,19 +53,18 @@ export default function PageLoader() {
             className="relative flex flex-col items-center justify-center"
             animate={
               step === "engage" || step === "text"
-                ? { y: 2, scale: 0.985 } // The engagement click
+                ? { y: 2, scale: 0.985 } 
                 : { y: 0, scale: 1 }
             }
             transition={{ duration: 0.4, ease: gentleEngage }}
           >
-            {/* SVG Logo Setup - Using image masking for perfect fidelity */}
+            {/* SVG Logo Setup */}
             <div className="w-40 h-40 md:w-48 md:h-48 relative overflow-visible" style={{ perspective: "800px" }}>
               <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
                 
                 <defs>
-                  {/* The mask defining the incredibly smooth drawing animation */}
                   <mask id="precision-mask">
-                    {/* 1. Gear Teeth (0.0s - 1.5s) */}
+                    {/* 1. Gear Teeth */}
                     <g>
                       {gearTeeth.map((tooth, i) => (
                         <motion.rect
@@ -78,56 +79,58 @@ export default function PageLoader() {
                           animate={{ opacity: 1, scale: 1, rotate: tooth.rotate }}
                           transition={{
                             duration: 0.8,
-                            delay: i * 0.05, // Smooth 0.05s stagger
+                            delay: i * 0.05,
                             ease: smoothEase,
                           }}
                         />
                       ))}
                     </g>
 
-                    {/* 2. Gear Ring (1.2s - 2.8s) */}
+                    {/* 2. Gear Ring */}
                     <motion.circle
                       cx="50"
                       cy="50"
                       r="30"
                       fill="none"
                       stroke="white"
-                      strokeWidth="15"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ duration: 1.6, delay: 1.2, ease: smoothEase }}
+                      initial={{ pathLength: 0, strokeWidth: 15 }}
+                      animate={
+                        step === "build" 
+                          ? { pathLength: 1, strokeWidth: 15 } 
+                          // Expand the stroke massively to seamlessly flood and reveal the whole image
+                          : { pathLength: 1, strokeWidth: 150 }
+                      }
+                      transition={{ 
+                        pathLength: { duration: 1.6, delay: 1.2, ease: drawEase },
+                        strokeWidth: { duration: 1.0, ease: smoothEase } 
+                      }}
                     />
 
-                    {/* 3. The "N" Monogram (2.4s - 4.2s) */}
+                    {/* 3. The "N" Monogram */}
                     <g style={{ transformOrigin: "50% 50%" }}>
                       <motion.path
                         d="M 25 75 L 25 25 L 75 75 L 75 25"
                         fill="none"
                         stroke="white"
-                        strokeWidth="25"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 1.8, delay: 2.4, ease: smoothEase }}
+                        initial={{ pathLength: 0, strokeWidth: 25 }}
+                        animate={
+                          step === "build" 
+                            ? { pathLength: 1, strokeWidth: 25 } 
+                            // Expand the stroke massively to seamlessly flood and reveal the whole image
+                            : { pathLength: 1, strokeWidth: 200 }
+                        }
+                        transition={{ 
+                          pathLength: { duration: 1.8, delay: 2.4, ease: drawEase },
+                          strokeWidth: { duration: 1.0, ease: smoothEase }
+                        }}
                       />
                     </g>
                   </mask>
                 </defs>
 
-                {/* The Unmasked Full Image (Fades in very softly at engagement for perfect final fidelity) */}
-                <motion.image 
-                  href={LOGO_URL} 
-                  x="0" 
-                  y="0" 
-                  width="100" 
-                  height="100" 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: step === "engage" || step === "text" || step === "done" ? 1 : 0 }}
-                  transition={{ duration: 1.2, ease: smoothEase }}
-                />
-
-                {/* The Masked Animated Image */}
+                {/* Single Image Layer - Masked seamlessly */}
                 <motion.image 
                   href={LOGO_URL} 
                   x="0" 
@@ -135,14 +138,12 @@ export default function PageLoader() {
                   width="100" 
                   height="100" 
                   mask="url(#precision-mask)" 
-                  animate={{ opacity: step === "engage" || step === "text" || step === "done" ? 0 : 1 }}
-                  transition={{ duration: 1.2, ease: smoothEase }}
                 />
                 
               </svg>
             </div>
 
-            {/* Tagline Reveal (4.6s - 6.0s) */}
+            {/* Tagline Reveal */}
             <div className="absolute top-[110%] w-full flex flex-col items-center justify-center mt-4">
               <AnimatePresence>
                 {(step === "text" || step === "done") && (
