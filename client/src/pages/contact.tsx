@@ -124,7 +124,7 @@ export default function Contact() {
 
       {/* Additional Info Section */}
       <div className="bg-slate-50 py-16 border-t border-slate-200">
-        <div className="container px-4 md:px-6 max-w-5xl">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
           <div className="grid md:grid-cols-3 gap-8">
             <motion.div
               initial={{ opacity: 0 }}
