@@ -3,181 +3,132 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const LOGO_URL = "/logo-loader.png";
 
+// Apple-style ultra-smooth custom easing curve
+const premiumEase = [0.16, 1, 0.3, 1];
+
 export default function PageLoader() {
   const [isLoading, setIsLoading] = useState(true);
-  const [phase, setPhase] = useState<"fixing" | "relaxing" | "done">("fixing");
+  const [step, setStep] = useState<"dot" | "line" | "we-fix" | "you-relax" | "reveal">("dot");
 
   useEffect(() => {
-    // Phase 1: Fixing (0s to 1.8s) - High energy, mechanical
-    const t1 = setTimeout(() => {
-      setPhase("relaxing");
-    }, 1800);
-
-    // Phase 2: Relaxing (1.8s to 4.0s) - Calm, ethereal
-    const t2 = setTimeout(() => {
-      setPhase("done");
-      setIsLoading(false);
-    }, 4000);
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
+    const sequence = async () => {
+      // Step 1: Dot expands to Line
+      setTimeout(() => setStep("line"), 200);
+      
+      // Step 2: Line opens to reveal WE FIX
+      setTimeout(() => setStep("we-fix"), 800);
+      
+      // Step 3: WE FIX rolls to YOU RELAX
+      setTimeout(() => setStep("you-relax"), 2200);
+      
+      // Step 4: Window fully expands to reveal site
+      setTimeout(() => setStep("reveal"), 3800);
+      
+      // End loader completely
+      setTimeout(() => setIsLoading(false), 4600);
     };
+    
+    sequence();
   }, []);
 
   return (
     <AnimatePresence>
       {isLoading && (
         <motion.div
-          key="repair-loader"
+          key="minimalist-loader"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center pointer-events-none bg-black"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, backdropFilter: "blur(0px)", transition: { duration: 1.2, ease: "easeInOut" } }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center pointer-events-none overflow-hidden bg-slate-950"
+          exit={{ opacity: 0, transition: { duration: 0.8, ease: premiumEase } }}
         >
-          {/* Dynamic Backgrounds based on phase */}
           
-          {/* Fixing Background: High-tech grid & mechanical feel */}
-          <AnimatePresence>
-            {phase === "fixing" && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.8 } }}
-                className="absolute inset-0"
-              >
-                {/* Tech Grid */}
-                <div className="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(59,130,246,0.3)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.3)_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_20%,transparent_100%)]" />
+          {/* The Expanding Letterbox Window */}
+          <motion.div
+            className="absolute inset-0 flex flex-col justify-center overflow-hidden"
+            initial={{ height: "0px" }}
+            animate={{ 
+              height: step === "reveal" ? "100vh" : 
+                      step === "we-fix" || step === "you-relax" ? "240px" : "0px",
+              opacity: step === "reveal" ? 0 : 1
+            }}
+            transition={{ duration: 1.2, ease: premiumEase }}
+          >
+            {/* Dark background inside the slit */}
+            <div className="absolute inset-0 bg-[#050505] flex items-center justify-center">
+              
+              <div className="relative w-full h-full flex flex-col items-center justify-center">
                 
-                {/* Scanning Laser Background effect */}
-                <motion.div 
-                  initial={{ top: "-10%" }}
-                  animate={{ top: "110%" }}
-                  transition={{ duration: 1.5, ease: "linear", repeat: Infinity }}
-                  className="absolute left-0 w-full h-32 bg-gradient-to-b from-transparent via-blue-500/10 to-transparent"
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Relaxing Background: Soft, warm, ethereal glow */}
-          <AnimatePresence>
-            {phase === "relaxing" && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="absolute inset-0"
-              >
-                {/* Smooth center glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.15),transparent_60%)]" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Visual Centerpiece */}
-          <div className="relative flex items-center justify-center w-64 h-64 mb-12">
-            
-            {/* The Logo */}
-            <motion.div
-              animate={{ 
-                scale: phase === "relaxing" ? 1.05 : 1, 
-                filter: phase === "relaxing" ? "drop-shadow(0px 0px 25px rgba(59,130,246,0.6))" : "drop-shadow(0px 0px 0px rgba(59,130,246,0))"
-              }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="relative z-20 w-28 h-28 md:w-36 md:h-36"
-            >
-              <img src={LOGO_URL} alt="Nioora" className="w-full h-full object-contain relative z-10" />
-            </motion.div>
-
-            {/* Phase 1: Mechanical Rings (representing fixing/engineering) */}
-            <AnimatePresence>
-              {phase === "fixing" && (
-                <>
-                  <motion.div
-                    key="outer-gear"
-                    initial={{ rotate: 0 }}
-                    animate={{ rotate: 360 }}
-                    exit={{ opacity: 0, scale: 1.2, transition: { duration: 0.5 } }}
-                    transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-                    className="absolute inset-2 border-[4px] border-dashed border-blue-500/40 rounded-full z-0"
-                  />
-                  <motion.div
-                    key="inner-gear"
-                    initial={{ rotate: 360 }}
-                    animate={{ rotate: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.5 } }}
-                    transition={{ duration: 3, ease: "linear", repeat: Infinity }}
-                    className="absolute inset-8 border-[2px] border-dashed border-white/30 rounded-full z-0"
-                  />
-                  {/* Scanner line over logo */}
-                  <motion.div
-                    initial={{ top: "0%" }}
-                    animate={{ top: "100%" }}
-                    transition={{ duration: 0.8, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-                    className="absolute left-10 right-10 h-[2px] bg-blue-400 shadow-[0_0_8px_#60a5fa] z-30"
-                  />
-                </>
-              )}
-            </AnimatePresence>
-
-            {/* Phase 2: Zen Ripples (representing relaxation/calm) */}
-            <AnimatePresence>
-              {phase === "relaxing" && (
-                <>
-                  {[1, 2, 3].map((i) => (
-                    <motion.div
-                      key={`ripple-${i}`}
-                      initial={{ opacity: 0.8, scale: 0.5 }}
-                      animate={{ opacity: 0, scale: 2 }}
-                      transition={{ 
-                        duration: 2.5, 
-                        ease: "easeOut", 
-                        repeat: Infinity,
-                        delay: i * 0.8 
-                      }}
-                      className="absolute inset-0 rounded-full bg-blue-500/20 z-0"
-                    />
-                  ))}
-                </>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* The Text Container */}
-          <div className="h-24 flex flex-col items-center justify-center relative overflow-visible">
-            
-            {/* WE FIX. */}
-            <AnimatePresence>
-              {phase === "fixing" && (
+                {/* The Logo (Small, premium placement) */}
                 <motion.div
-                  key="text-fix"
-                  initial={{ scale: 1.5, opacity: 0, filter: "blur(10px)" }}
-                  animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-                  exit={{ y: -20, opacity: 0, filter: "blur(10px)", transition: { duration: 0.4 } }}
-                  transition={{ type: "spring", stiffness: 150, damping: 10 }}
-                  className="absolute text-5xl md:text-6xl font-heading font-black tracking-widest text-white uppercase"
-                  style={{ textShadow: "0px 4px 20px rgba(59,130,246,0.5)" }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ 
+                    opacity: step === "we-fix" || step === "you-relax" ? 1 : 0, 
+                    y: step === "we-fix" || step === "you-relax" ? -40 : 10 
+                  }}
+                  transition={{ duration: 1, ease: premiumEase, delay: 0.2 }}
+                  className="absolute"
                 >
-                  <span className="text-blue-500">WE</span> FIX.
+                  <img src={LOGO_URL} alt="Nioora" className="w-12 h-12 md:w-16 md:h-16 object-contain" />
                 </motion.div>
-              )}
-            </AnimatePresence>
 
-            {/* YOU RELAX. */}
-            <AnimatePresence>
-              {phase === "relaxing" && (
-                <motion.div
-                  key="text-relax"
-                  initial={{ y: 30, opacity: 0, filter: "blur(10px)", letterSpacing: "0.1em" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)", letterSpacing: "0.3em" }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                  className="absolute text-3xl md:text-4xl font-sans font-light text-blue-50 uppercase whitespace-nowrap"
-                >
-                  YOU <span className="font-semibold text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">RELAX.</span>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                {/* Typography Container (Masked for the rolling effect) */}
+                <div className="overflow-hidden h-[80px] mt-16 relative flex items-center justify-center w-full">
+                  
+                  {/* WE FIX. */}
+                  <motion.div
+                    className="absolute text-3xl md:text-5xl font-heading font-medium tracking-[0.2em] text-white uppercase whitespace-nowrap"
+                    initial={{ y: "100%" }}
+                    animate={{ 
+                      y: step === "we-fix" ? "0%" : step === "you-relax" || step === "reveal" ? "-100%" : "100%",
+                      opacity: step === "we-fix" ? 1 : 0
+                    }}
+                    transition={{ duration: 1, ease: premiumEase }}
+                  >
+                    WE FIX.
+                  </motion.div>
+
+                  {/* YOU RELAX. */}
+                  <motion.div
+                    className="absolute text-3xl md:text-5xl font-heading font-medium tracking-[0.2em] text-slate-400 uppercase whitespace-nowrap"
+                    initial={{ y: "100%" }}
+                    animate={{ 
+                      y: step === "you-relax" ? "0%" : step === "reveal" ? "-100%" : "100%",
+                      opacity: step === "you-relax" ? 1 : 0
+                    }}
+                    transition={{ duration: 1, ease: premiumEase }}
+                  >
+                    YOU RELAX.
+                  </motion.div>
+
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* The Laser Line (Top edge of the letterbox) */}
+          <motion.div
+            className="absolute bg-white z-10 shadow-[0_0_20px_rgba(255,255,255,0.8)]"
+            initial={{ width: "4px", height: "4px", borderRadius: "4px" }}
+            animate={{ 
+              width: step === "line" || step === "we-fix" || step === "you-relax" ? "100vw" : step === "reveal" ? "100vw" : "4px",
+              height: step === "line" || step === "we-fix" || step === "you-relax" ? "1px" : "4px",
+              opacity: step === "reveal" ? 0 : 1,
+              top: step === "we-fix" || step === "you-relax" ? "calc(50% - 120px)" : step === "reveal" ? "0%" : "50%"
+            }}
+            transition={{ duration: 1.2, ease: premiumEase }}
+          />
+          
+          {/* The Laser Line (Bottom edge of the letterbox) */}
+          <motion.div
+            className="absolute bg-white z-10 shadow-[0_0_20px_rgba(255,255,255,0.8)] hidden md:block"
+            initial={{ width: "0vw", height: "1px" }}
+            animate={{ 
+              width: step === "we-fix" || step === "you-relax" ? "100vw" : step === "reveal" ? "100vw" : "0vw",
+              opacity: step === "reveal" ? 0 : step === "we-fix" || step === "you-relax" ? 1 : 0,
+              top: step === "we-fix" || step === "you-relax" ? "calc(50% + 120px)" : step === "reveal" ? "100%" : "50%"
+            }}
+            transition={{ duration: 1.2, ease: premiumEase }}
+          />
+
         </motion.div>
       )}
     </AnimatePresence>
