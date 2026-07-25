@@ -105,11 +105,10 @@ export default function PageLoader() {
                         fill="none"
                         stroke="white"
                         strokeWidth="25"
-                        strokeLinecap="square"
-                        strokeLinejoin="miter"
-                        strokeMiterlimit="10"
-                        initial={{ pathLength: 0, rotateY: -10, scale: 1.03 }}
-                        animate={{ pathLength: 1, rotateY: 0, scale: 1 }}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
                         transition={{ duration: 1.8, delay: 2.4, ease: smoothEase }}
                       />
                     </g>
