@@ -15,7 +15,7 @@ export const serviceCatalog: ServiceItem[] = [
   { id: "dishwasher", name: "Dishwasher", category: "Appliances", icon: "UtensilsCrossed" },
   { id: "microwave", name: "Microwave Oven", category: "Appliances", icon: "Microwave" },
   { id: "water-purifier", name: "Water Purifier", category: "Appliances", icon: "Droplets" },
-  { id: "kitchen-chimney", name: "Kitchen Chimney", category: "Appliances", icon: "Fan" },
+  { id: "kitchen-chimney", name: "Kitchen Chimney", category: "Appliances", icon: "CookingPot" },
   { id: "ac", name: "Air Conditioner", category: "Appliances", icon: "AirVent" },
   { id: "air-cooler", name: "Air Cooler", category: "Appliances", icon: "Wind" },
   { id: "geyser", name: "Geyser / Water Heater", category: "Appliances", icon: "Thermometer" },
