@@ -55,7 +55,7 @@ export default function PoliciesPage() {
           <p style={{ color: subtextColor, fontSize: '14px' }}>
             In accordance with the IT Act and DPDP Act 2023, the details of the Grievance Officer are:<br />
             <strong>Name:</strong> Rogithprathap T M<br />
-            <strong>Email:</strong> niooraservice@gmail.com
+            <strong>Email:</strong> <a href="https://mail.google.com/mail/?view=cm&fs=1&to=niooraservice@gmail.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">niooraservice@gmail.com</a>
           </p>
         </footer>
 
